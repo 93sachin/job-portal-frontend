@@ -1,38 +1,36 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-function Dashboard() {
-  const [user, setUser] = useState(null);
+function StudentDashboard() {
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("access");
 
     fetch("https://job-portal-backend-p580.onrender.com/api/profile/", {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(res => res.json())
-      .then(data => {
-        setUser(data);
+      .then((res) => res.json())
+      .then((data) => {
+        setProfile(data);
       });
   }, []);
 
   return (
     <div>
-      <h1>Student Dashboard</h1>
+      <h2>Student Dashboard</h2>
 
-      {user && (
-        <>
-          <h2>Welcome {user.username}</h2>
-          <p>Email: {user.email}</p>
-        </>
+      {profile && (
+        <div>
+          <h3>Welcome, {profile.username} 👋</h3>
+          <p>Email: {profile.email}</p>
+        </div>
       )}
 
-      <h3>Available Jobs</h3>
-
-      {/* Tumhara existing jobs code yaha rahega */}
+      {/* Jobs section yaha rahega */}
     </div>
   );
 }
 
-export default Dashboard;
+export default StudentDashboard;

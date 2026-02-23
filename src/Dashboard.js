@@ -2,19 +2,28 @@ import { useEffect, useState } from "react";
 
 function StudentDashboard() {
   const [profile, setProfile] = useState(null);
+  const [applications, setApplications] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("access");
 
+    // 1️⃣ Profile Fetch
     fetch("https://job-portal-backend-p580.onrender.com/api/profile/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        setProfile(data);
-      });
+      .then((data) => setProfile(data));
+
+    // 2️⃣ My Applications Fetch
+    fetch("https://job-portal-backend-p580.onrender.com/api/application/my-application/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setApplications(data));
   }, []);
 
   return (
@@ -28,7 +37,13 @@ function StudentDashboard() {
         </div>
       )}
 
-      {/* Jobs section yaha rahega */}
+      <h3>My Applications</h3>
+      {applications.map((app) => (
+        <div key={app.id}>
+          <p>Job: {app.job.title}</p>
+          <p>Status: {app.status}</p>
+        </div>
+      ))}
     </div>
   );
 }

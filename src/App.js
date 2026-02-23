@@ -1,3 +1,4 @@
+console.log("NEW VERSION RUNNING");
 import React, { useState, useEffect } from "react";
 
 const API_BASE = "https://job-portal-backend-p580.onrender.com";
@@ -88,19 +89,25 @@ function App() {
   };
 
   useEffect(() => {
-  if (isLoggedIn) {
-    fetchProfile();
-  }
+  if (!isLoggedIn) return;
+
+  const token = localStorage.getItem("access");
+  if (!token) return;
+
+  // 🔥 PROFILE FETCH
+  fetch(`${API_BASE}/api/profile/`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("PROFILE DATA:", data);
+      setProfile(data);
+    });
+
+  // 🔥 JOBS FETCH
+  fetchJobs();
+
 }, [isLoggedIn]);
-
-useEffect(() => {
-  if (isLoggedIn && role) {
-    fetchJobs();
-
-    if (role === "student") fetchMyApplications();
-    if (role === "recruiter") fetchAllApplications();
-  }
-}, [role]);
 
   const handleLogout = () => {
     localStorage.clear();

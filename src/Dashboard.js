@@ -31,7 +31,7 @@ function StudentDashboard() {
       <h2>Student Dashboard</h2>
 
       {profile && (
-        <div>
+        <div style={{marginTop: 20}}>
           <h3>Welcome, {profile.username} 👋</h3>
           <p>Email: {profile.email}</p>
         </div>

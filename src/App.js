@@ -175,6 +175,13 @@ function App() {
   return (
     <div style={{ padding: 40 }}>
       <h1>{role === "recruiter" ? "Recruiter Dashboard" : "Student Dashboard"}</h1>
+
+      {profile && (
+  <div style={{ marginTop: 20 }}>
+    <h3>Welcome, {profile.username} 👋</h3>
+    <p>Email: {profile.email}</p>
+  </div>
+)}
       <button onClick={handleLogout}>Logout</button>
 
       {/* STUDENT */}

@@ -88,12 +88,19 @@ function App() {
   };
 
   useEffect(() => {
-    if (isLoggedIn && role) {
-      fetchJobs();
-      if (role === "student") fetchMyApplications();
-      if (role === "recruiter") fetchAllApplications();
-    }
-  }, [isLoggedIn, role]);
+  if (isLoggedIn) {
+    fetchProfile();
+  }
+}, [isLoggedIn]);
+
+useEffect(() => {
+  if (isLoggedIn && role) {
+    fetchJobs();
+
+    if (role === "student") fetchMyApplications();
+    if (role === "recruiter") fetchAllApplications();
+  }
+}, [role]);
 
   const handleLogout = () => {
     localStorage.clear();

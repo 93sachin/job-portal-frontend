@@ -1,9 +1,12 @@
-console.log("NEW VERSION RUNNING");
 import React, { useState, useEffect } from "react";
+import "./App.css";
+
+console.log("NEW VERSION RUNNING");
 
 const API_BASE = "https://job-portal-backend-p580.onrender.com";
 
 function App() {
+  const [profile, setProfile] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);

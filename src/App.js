@@ -1,237 +1,63 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
+import React from "react";
+import { Routes, Route, Navigate, useNavigate} from "react-router-dom";
+import Dashboard from "./Dashboard";
+import MyApplications from "./MyApplications";
+import RecruiterDashboard from "./RecruiterDashboard";
+import Login from "./Login";
 
-console.log("NEW VERSION RUNNING");
-
-const API_BASE = "https://job-portal-backend-p580.onrender.com";
-
-function App() {
-  const [profile, setProfile] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [role, setRole] = useState(null);
-  const [jobs, setJobs] = useState([]);
-  const [applications, setApplications] = useState([]);
-  const [allApplications, setAllApplications] = useState([]);
-  const [message, setMessage] = useState("");
-
-  // 🔐 Login
-  const handleLogin = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/api/token/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (!res.ok) {
-        setMessage("Invalid Credentials ❌");
-        return;
-      }
-
-      const data = await res.json();
-      localStorage.setItem("access", data.access);
-      setIsLoggedIn(true);
-      fetchUser(data.access);
-
-    } catch {
-      setMessage("Server Error");
-    }
-  };
-
-  // 🔎 Fetch Current User
-  const fetchUser = async (token) => {
-    const res = await fetch(`${API_BASE}/api/user/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    const data = await res.json();
-    setRole(data.role);
-  };
-
-  // 📌 Fetch Jobs
-  const fetchJobs = async () => {
-    const token = localStorage.getItem("access");
-
-    const res = await fetch(`${API_BASE}/api/jobs/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    const data = await res.json();
-
-    if (Array.isArray(data)) setJobs(data);
-    else if (Array.isArray(data.results)) setJobs(data.results);
-  };
-
-  // 📌 Student Applications
-  const fetchMyApplications = async () => {
-    const token = localStorage.getItem("access");
-
-    const res = await fetch(
-      `${API_BASE}/api/applications/my-applications/`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
-    const data = await res.json();
-    if (res.ok) setApplications(data);
-  };
-
-  // 📌 Recruiter Applications
-  const fetchAllApplications = async () => {
-    const token = localStorage.getItem("access");
-
-    const res = await fetch(`${API_BASE}/api/applications/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    const data = await res.json();
-    if (res.ok) setAllApplications(data);
-  };
-
-  useEffect(() => {
-  if (!isLoggedIn) return;
-
+// ================= PROTECTED ROUTE =================
+function ProtectedRoute({ children, allowedRole }) {
   const token = localStorage.getItem("access");
-  if (!token) return;
+  const role = localStorage.getItem("role");
+  
+  if (!token) return <Navigate to="/" />;
+  
+  if (allowedRole && role !== allowedRole)
+    return <Navigate to="/" />;
 
-  // 🔥 PROFILE FETCH
-  fetch(`${API_BASE}/api/profile/`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("PROFILE DATA:", data);
-      setProfile(data);
-    });
+  return children;
+}
 
-  // 🔥 JOBS FETCH
-  fetchJobs();
 
-}, [isLoggedIn]);
-
-  const handleLogout = () => {
-    localStorage.clear();
-    setIsLoggedIn(false);
-    setRole(null);
-  };
-
-  const applyJob = async (jobId) => {
-    const token = localStorage.getItem("access");
-
-    await fetch(`${API_BASE}/api/apply/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ job: jobId }),
-    });
-
-    fetchMyApplications();
-  };
-
-  const updateStatus = async (id, status) => {
-    const token = localStorage.getItem("access");
-
-    await fetch(
-      `${API_BASE}/api/applications/${id}/update-status/`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status }),
-      }
-    );
-
-    fetchAllApplications();
-  };
-
-  if (!isLoggedIn) {
-    return (
-      <div style={{ padding: 40 }}>
-        <h1>Job Portal Login</h1>
-        <input
-          placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <br /><br />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br /><br />
-        <button onClick={handleLogin}>Login</button>
-        <p>{message}</p>
-      </div>
-    );
-  }
-
+// ================= MAIN APP =================
+function App() {
   return (
-    <div style={{ padding: 40 }}>
-      <h1>{role === "recruiter" ? "Recruiter Dashboard" : "Student Dashboard"}</h1>
+    <Routes>
 
-      {profile && (
-  <div style={{ marginTop: 20 }}>
-    <h3>Welcome, {profile.username} 👋</h3>
-    <p>Email: {profile.email}</p>
-  </div>
-)}
-      <button onClick={handleLogout}>Logout</button>
+      {/* Login Route */}
+      <Route path="/" element={<Login />} />
 
-      {/* STUDENT */}
-      {role === "student" && (
-        <>
-          <h2>Available Jobs</h2>
-          {jobs.map((job) => {
-            const application = applications.find(
-              (app) => app.job === job.id
-            );
+      {/* Dashboard Route */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute allowedRole="student">
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
 
-            return (
-              <div key={job.id} style={{ border: "1px solid #ccc", padding: 15, margin: 10 }}>
-                <h3>{job.title}</h3>
-                <p>{job.description}</p>
+      {/* Recruiter Dashboard */}
+      <Route
+        path="/recruiter-dashboard"
+        element={
+          <ProtectedRoute allowedRole="recruiter">
+            <RecruiterDashboard />
+          </ProtectedRoute>
+        }
+      /> 
 
-                {application ? (
-                  <p>Status: <strong>{application.status}</strong></p>
-                ) : (
-                  <button onClick={() => applyJob(job.id)}>Apply</button>
-                )}
-              </div>
-            );
-          })}
-        </>
-      )}
+      {/* My Applications Route */}
+      <Route
+        path="/my-applications"
+        element={
+          <ProtectedRoute>
+            <MyApplications />
+          </ProtectedRoute>
+        }
+      /> 
 
-      {/* RECRUITER */}
-      {role === "recruiter" && (
-        <>
-          <h2>All Applications</h2>
-
-          {allApplications.map((app) => (
-            <div key={app.id} style={{ border: "1px solid #ccc", padding: 15, margin: 10 }}>
-              <h3>Job: {app.job_title}</h3>
-              <p>Applicant: {app.applicant_username}</p>
-              <p>Status: {app.status}</p>
-
-              <button onClick={() => updateStatus(app.id, "SELECTED")}>
-                Select
-              </button>
-
-              <button onClick={() => updateStatus(app.id, "REJECTED")}>
-                Reject
-              </button>
-            </div>
-          ))}
-        </>
-      )}
-    </div>
+    </Routes>
   );
 }
 

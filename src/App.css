@@ -1,38 +1,65 @@
-.App {
-  text-align: center;
+.jobs-section {
+  margin-top: 40px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.job-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: 0.3s;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.job-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.job-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.company-name {
+  font-size: 14px;
+  color: #777;
+}
+
+.job-description {
+  margin: 15px 0;
+  color: #555;
+}
+
+.job-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.job-buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.edit-btn {
+  background-color: #4d79ff;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.view-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.job-buttons button:hover {
+  opacity: 0.85;
 }

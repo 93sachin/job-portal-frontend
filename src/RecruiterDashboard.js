@@ -211,7 +211,7 @@ const handleViewApplications = async (jobId) => {
 
   try {
     const response = await fetch(
-      `https://job-portal-backend-p580.onrender.com/api/jobs/applications/${jobId}/`,
+      `https://job-portal-backend-p580.onrender.com/api/jobs/applications/${jobId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

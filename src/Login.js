@@ -11,7 +11,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("https://job-portal-backend.onrender.com/api/token/", {
+      const response = await fetch("https://job-portal-backend-p580.onrender.com/api/token/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

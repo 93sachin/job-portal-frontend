@@ -29,7 +29,7 @@ function Dashboard() {
 
   // Fetch my applications
   useEffect(() => {
-    fetch("https://job-portal-backend.onrender.com/api/applications/my-applications/", {
+    fetch("https://job-portal-backend-p580.onrender.com/api/applications/my-applications/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -52,7 +52,7 @@ function Dashboard() {
     formData.append("resume", resume);
 
     const response = await fetch(
-      "https://job-portal-backend.onrender.com/api/applications/apply/",
+      "https://job-portal-backend-p580.onrender.com/api/applications/apply/",
       {
         method: "POST",
         headers: {

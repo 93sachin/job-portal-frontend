@@ -44,7 +44,7 @@ const handleLogout = () => {
   const fetchMyJobs = async () => {
     try {
       const response = await fetch(
-        "https://job-portal-backend.onrender.com/api/jobs/list/",
+        "https://job-portal-backend-p580.onrender.com/api/jobs/list/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ const handleLogout = () => {
     const token = localStorage.getItem("access");
 
     const response = await fetch(
-      "https://job-portal-backend.onrender.com/api/jobs/new-applications-count/",
+      "https://job-portal-backend-p580.onrender.com/api/jobs/new-applications-count/",
       {
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -88,7 +88,7 @@ const fetchAllApplications = async () => {
     const token = localStorage.getItem("access");
 
     const response = await fetch(
-      "https://job-portal-backend.onrender.com/api/applications/",
+      "https://job-portal-backend-p580.onrender.com/api/applications/",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ const fetchAllApplications = async () => {
   }, []);
 
   useEffect(() => {
-  fetch("https://job-portal-backend.onrender.com/api/jobs/analytics", {
+  fetch("https://job-portal-backend-p580.onrender.com/api/jobs/analytics", {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("access")}`,
     },
@@ -133,8 +133,8 @@ const fetchAllApplications = async () => {
   // 🔥 Create or Update Job
   const handlePostJob = async () => {
     const url = editId
-      ? `https://job-portal-backend.onrender.com/api/jobs/update/${editId}/`
-      : "https://job-portal-backend.onrender.com/api/jobs/create/";
+      ? `https://job-portal-backend-p580.onrender.com/api/jobs/update/${editId}/`
+      : "https://job-portal-backend-p580.onrender.com/api/jobs/create/";
 
     const method = editId ? "PUT" : "POST";
 
@@ -167,7 +167,7 @@ const fetchAllApplications = async () => {
   const handleDelete = async (id) => {
   try {
     const response = await fetch(
-      `https://job-portal-backend.onrender.com/api/jobs/delete/${id}/`,
+      `https://job-portal-backend-p580.onrender.com/api/jobs/delete/${id}/`,
       {
         method: "DELETE",
         headers: {
@@ -211,7 +211,7 @@ const handleViewApplications = async (jobId) => {
 
   try {
     const response = await fetch(
-      `https://job-portal-backend.onrender.com/api/jobs/applications/${jobId}/`,
+      `https://job-portal-backend-p580.onrender.com/api/jobs/applications/${jobId}/`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -233,7 +233,7 @@ const handleViewApplications = async (jobId) => {
 // const handleUpdateStatus = async (applicationId, status) => {
 //   try {
 //     await fetch(
-//       `http://127.0.0.1:8000/api/jobs/application/update/${applicationId}/`,
+//       `https://job-portal-backend-p580.onrender.com/api/jobs/application/update/${applicationId}/`,
 //       {
 //         method: "PUT",
 //         headers: {
@@ -246,7 +246,7 @@ const handleViewApplications = async (jobId) => {
 
 //     // 🔥 Only refresh applications — don't toggle
 //     const response = await fetch(
-//       `http://127.0.0.1:8000/api/jobs/applications/${selectedJobId}/`,
+//       `https://job-portal-backend-p580.onrender.com/api/jobs/applications/${selectedJobId}/`,
 //       {
 //         headers: {
 //           Authorization: `Bearer ${token}`,

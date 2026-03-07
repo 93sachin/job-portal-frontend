@@ -246,7 +246,7 @@ const handleUpdateStatus = async (applicationId, status) => {
 
     // 🔥 Only refresh applications — don't toggle
     const response = await fetch(
-      `https://job-portal-backend-p580.onrender.com/api/jobs/applications/${selectedJobId}/`,
+      `https://job-portal-backend-p580.onrender.com/api/applications/${selectedJobId}/`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

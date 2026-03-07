@@ -230,7 +230,7 @@ const handleViewApplications = async (jobId) => {
 };
 
   // 🔥 Update Application Status
-const handleUpdateStatus = async (applicationId, status) => {
+const handleUpdateStatus = async (applicationId, status, applicantId) => {
   try {
     await fetch(
       `https://job-portal-backend-p580.onrender.com/api/update-application/${applicationId}/`,

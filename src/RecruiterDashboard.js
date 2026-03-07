@@ -44,7 +44,7 @@ const handleLogout = () => {
   const fetchMyJobs = async () => {
     try {
       const response = await fetch(
-        "https://job-portal-backend-p580.onrender.com/api/jobs/list/",
+        "https://job-portal-backend-p580.onrender.com/api/jobs/",
         {
           headers: {
             Authorization: `Bearer ${token}`,

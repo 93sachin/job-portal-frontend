@@ -230,37 +230,37 @@ const handleViewApplications = async (jobId) => {
 };
 
   // 🔥 Update Application Status
-// const handleUpdateStatus = async (applicationId, status) => {
-//   try {
-//     await fetch(
-//       `https://job-portal-backend-p580.onrender.com/api/jobs/application/update/${applicationId}/`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${token}`,
-//         },
-//         body: JSON.stringify({ status }),
-//       }
-//     );
+const handleUpdateStatus = async (applicationId, status) => {
+  try {
+    await fetch(
+      `https://job-portal-backend-p580.onrender.com/api/update-application/${applicationId}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
 
-//     // 🔥 Only refresh applications — don't toggle
-//     const response = await fetch(
-//       `https://job-portal-backend-p580.onrender.com/api/jobs/applications/${selectedJobId}/`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       }
-//     );
+    // 🔥 Only refresh applications — don't toggle
+    const response = await fetch(
+      `https://job-portal-backend-p580.onrender.com/api/jobs/applications/${selectedJobId}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-//     const data = await response.json();
-//     setApplications(data);
+    const data = await response.json();
+    setApplications(data);
 
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // const cardStyle = {
 //   padding: "24px",
@@ -471,8 +471,25 @@ return (
 
                             <p><b>Status:</b> {app.status}</p>
 
+                            <button
+                                    onClick={() => handleUpdateStatus(app.id, "SHORTLISTED")}
+                                    style={{marginRight:"10px",background:"green",color:"white"}}
+                                    >
+                                    Shortlist
+                                    </button>
+
+                                    <button
+                                    onClick={() => handleUpdateStatus(app.id, "REJECTED")}
+                                    style={{background:"red",color:"white"}}
+                                    >
+                                    Reject
+                              </button>
+
                             {app.resume && (
-                              <a href={app.resume} target="_blank" rel="noreferrer">
+                              <a href={`https://job-portal-backend-p580.onrender.com${app.resume}`} 
+                              target="_blank" 
+                              rel="noreferrer"
+                              >
                                 Download Resume
                               </a>
                             )}

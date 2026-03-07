@@ -124,7 +124,7 @@ const fetchAllApplications = async () => {
       } catch (err) {
         console.error("Not JSON Response:", text);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     })
     .catch((err) => console.error("Fetch error:", err));

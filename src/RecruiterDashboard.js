@@ -102,7 +102,7 @@ const fetchAllApplications = async () => {
     console.error("Error fetching applications:", error);
   }
 };
-  // eslint-disable-next-line
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchMyJobs();
     fetchNewApplicationsCount();

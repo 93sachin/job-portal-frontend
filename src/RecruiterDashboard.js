@@ -211,7 +211,7 @@ const handleViewApplications = async (jobId) => {
 
   try {
     const response = await fetch(
-      `https://job-portal-backend-p580.onrender.com/api/applications/${jobId}`,
+      `https://job-portal-backend-p580.onrender.com/api/applications/${jobId}/`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -456,7 +456,33 @@ return (
                 View Applications
               </button>
             </div>
+                {selectedJobId === job.id && (
+                    <div className="applications-list">
 
+                      <h4>Applications</h4>
+
+                      {applications.length === 0 ? (
+                        <p>No applications yet</p>
+                      ) : (
+                        applications.map(app => (
+                          <div key={app.id} className="application-card">
+
+                            <p><b>User:</b> {app.username}</p>
+
+                            <p><b>Status:</b> {app.status}</p>
+
+                            {app.resume && (
+                              <a href={app.resume} target="_blank" rel="noreferrer">
+                                Download Resume
+                              </a>
+                            )}
+
+                          </div>
+                        ))
+                      )}
+
+                    </div>
+                  )}
           </div>
         ))}
       </div>

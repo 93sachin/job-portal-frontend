@@ -18,7 +18,7 @@ function Dashboard() {
 
   // Fetch jobs
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/jobs/list/", {
+    fetch("https://job-portal-backend.onrender.com/api/jobs/list/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -29,7 +29,7 @@ function Dashboard() {
 
   // Fetch my applications
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/applications/my-applications/", {
+    fetch("https://job-portal-backend.onrender.com/api/applications/my-applications/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -52,7 +52,7 @@ function Dashboard() {
     formData.append("resume", resume);
 
     const response = await fetch(
-      "http://127.0.0.1:8000/api/applications/apply/",
+      "https://job-portal-backend.onrender.com/api/applications/apply/",
       {
         method: "POST",
         headers: {

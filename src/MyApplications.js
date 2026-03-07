@@ -7,7 +7,7 @@ function MyApplications() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/applications/my-applications/", {
+    fetch("https://job-portal-backend.onrender.com/api/applications/my-applications/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

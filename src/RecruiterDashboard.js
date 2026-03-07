@@ -240,7 +240,7 @@ const handleUpdateStatus = async (applicationId, status) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ status: status, job: selectedJobId }),
       }
     );
 

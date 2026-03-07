@@ -18,13 +18,14 @@ function Dashboard() {
 
   // Fetch jobs
   useEffect(() => {
-    fetch("https://job-portal-backend.onrender.com/api/jobs/list/", {
+    fetch("https://job-portal-backend-p580.onrender.com/api/jobs/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
-      .then((data) => setJobs(data));
+      .then((data) => setJobs(data))
+      .catch((err) => console.error(err));
   }, [token]);
 
   // Fetch my applications

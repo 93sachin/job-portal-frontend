@@ -27,7 +27,7 @@ function RecruiterDashboard() {
 });
   const [applications, setApplications] = useState([]);
   const [selectedJobId, setSelectedJobId] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("access");
   const navigate = useNavigate();
   const [newCount, setNewCount] = useState(0);
@@ -230,44 +230,44 @@ const handleViewApplications = async (jobId) => {
 };
 
   // 🔥 Update Application Status
-const handleUpdateStatus = async (applicationId, status) => {
-  try {
-    await fetch(
-      `http://127.0.0.1:8000/api/jobs/application/update/${applicationId}/`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ status }),
-      }
-    );
+// const handleUpdateStatus = async (applicationId, status) => {
+//   try {
+//     await fetch(
+//       `http://127.0.0.1:8000/api/jobs/application/update/${applicationId}/`,
+//       {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${token}`,
+//         },
+//         body: JSON.stringify({ status }),
+//       }
+//     );
 
-    // 🔥 Only refresh applications — don't toggle
-    const response = await fetch(
-      `http://127.0.0.1:8000/api/jobs/applications/${selectedJobId}/`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+//     // 🔥 Only refresh applications — don't toggle
+//     const response = await fetch(
+//       `http://127.0.0.1:8000/api/jobs/applications/${selectedJobId}/`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
 
-    const data = await response.json();
-    setApplications(data);
+//     const data = await response.json();
+//     setApplications(data);
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-const cardStyle = {
-  padding: "24px",
-  background: "white",
-  borderRadius: "20px",
-  boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
-};
+// const cardStyle = {
+//   padding: "24px",
+//   background: "white",
+//   borderRadius: "20px",
+//   boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
+// };
 
 return (
   <div className="recruiter-dashboard">

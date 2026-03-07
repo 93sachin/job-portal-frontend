@@ -83,9 +83,30 @@ const handleLogout = () => {
   }
 };
 
+const fetchAllApplications = async () => {
+  try {
+    const token = localStorage.getItem("access");
+
+    const response = await fetch(
+      "http://localhost:8000/api/applications/",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    setApplications(data);
+  } catch (error) {
+    console.error("Error fetching applications:", error);
+  }
+};
+
   useEffect(() => {
     fetchMyJobs();
     fetchNewApplicationsCount();
+    fetchAllApplications();
   }, []);
 
   useEffect(() => {
@@ -250,234 +271,199 @@ const cardStyle = {
 
 return (
   <div className="recruiter-dashboard">
+
+    {/* ===== TOP NAVBAR ===== */}
     <div className="top-navbar">
-    <h1 className="dashboard-title">Recruiter Dashboard 👨‍💼</h1>
+      <h1 className="dashboard-title">Recruiter Dashboard 👨‍💼</h1>
 
-    <div className="nav-right">
-    <div className="notification-bell"
+      <div className="nav-right">
+
+        <div
+          className="notification-bell"
           onClick={() => setShowNotifications(!showNotifications)}
-    >
-      🔔
-      {newCount > 0 && (
-        <span className="notification-count">
-          {newCount}
-        </span>
-      )}
+        >
+          🔔
+          {newCount > 0 && (
+            <span className="notification-count">{newCount}</span>
+          )}
 
-      {showNotifications && (
-        <div className="Notifications-dropdown">
-          <p>{newCount} new applications</p>
-          </div>
-      )}
-    </div>
-    
-    <button onClick={handleLogout} className="logout-btn">
-          Logout
-        </button>
-        </div>
-
-    {/* ===== Analytics Section ===== */}
-    <div className="analytics-section">
-
-      <div className="recruiter-cards">
-
-  <div className="recruiter-card total">
-    <h3>Total Jobs</h3>
-    <h2>{analytics.total_jobs}</h2>
-  </div>
-
-  <div className="recruiter-card apps">
-    <h3>Total Applications</h3>
-    <h2>{analytics.total_applications}</h2>
-  </div>
-
-  <div className="recruiter-card short">
-    <h3>Shortlisted</h3>
-    <h2>{analytics.shortlisted}</h2>
-  </div>
-
-  <div className="recruiter-card reject">
-    <h3>Rejected</h3>
-    <h2>{analytics.rejected}</h2>
-  </div>
-
-  <div className="recruiter-card pending">
-    <h3>Pending</h3>
-    <h2>{analytics.pending}</h2>
-  </div>
-</div>
-</div>
-
-      <div className="chart-box">
-  <Pie
-    data={{
-      labels: ["Shortlisted", "Rejected", "Pending"],
-      datasets: [
-        {
-          data: [
-            analytics.shortlisted,
-            analytics.rejected,
-            analytics.pending
-          ],
-          backgroundColor: [
-            "#00b09b",
-            "#ff416c",
-            "#f7971e"
-          ],
-          borderWidth: 0
-        }
-      ]
-    }}
-    options={{
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: "bottom",
-          labels: {
-            padding: 20,
-            font: { size: 14 }
-          }
-        }
-      }
-    }}
-  />
-</div>
-
-    </div>
-
-    {/* ===== Job Form Section ===== */}
-    <div className="form-section">
-
-      <h2>Post a Job</h2>
-
-      <input
-        placeholder="Job Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-
-      <input
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
-      <input
-        placeholder="Company"
-        value={company}
-        onChange={(e) => setCompany(e.target.value)}
-      />
-
-      <button onClick={handlePostJob}>
-        {editId ? "Update Job" : "Post Job"}
-      </button>
-
-    </div>
-
-    {/* ===== My Jobs Section ===== */}
-    <div className="jobs-section">
-
-      <h2>My Posted Jobs</h2>
-
-      {myJobs.map((job) => (
-       <div key={job.id} className="job-card">
-
-            <div className="job-header">
-    <h3>
-        {job.title}
-
-        {job.new_applications > 0 && (
-            <span className="new-badge">
-                🔴 {job.new_applications} New
-            </span>
-        )}
-    </h3>
-
-    <span className="company-name">{job.company}</span>
-</div>
-
-            <p className="job-description">{job.description}</p>
-
-            <div className="job-buttons">
-              <button className="delete-btn" onClick={() => handleDelete(job.id)}>
-                Delete
-              </button>
-
-              <button className="edit-btn" onClick={() =>handleEdit(job)}>
-                {editId === job.id ? "Cancel" : "Edit"}
-              </button>
-
-              <button className="view-btn" onClick={() => handleViewApplications(job.id)}>
-                View Applications
-              </button>
-            </div>
-
-                  {/* 🔥 Applications Section */}
-          {selectedJobId === job.id && (
-            <div style={{ marginTop: "15px", background: "#f5f5f5", padding: "10px" }}>
-              <h4>Applications:</h4>
+          {showNotifications && (
+            <div className="Notifications-dropdown">
+              <h4>New Applications</h4>
 
               {applications.length === 0 ? (
-                <p>No applications yet.</p>
+                <p>No new applications</p>
               ) : (
-                applications.map((app) => (
-                  <div key={app.id} style={{ marginBottom: "10px" }}>
-                    <p><strong>User:</strong> {app.username}</p>
-                    <p>
-                        <strong>Status:</strong>{" "}
-                        <span
-                            style={{
-                            padding: "4px 8px",
-                            borderRadius: "5px",
-                            color: "white",
-                            backgroundColor:
-                                app.status === "SHORTLISTED"
-                                ? "green"
-                                : app.status === "REJECTED"
-                                ? "red"
-                                : "gray",
-                            }}
-                        >
-                            {app.status}
-                        </span>
-                    </p>
-
-                    {app.resume && (
-                    <div style={{ margin: "5px 0" }}>
-                        <a
-                        href={`http://127.0.0.1:8000${app.resume}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        >
-                        Download Resume
-                        </a>
+                applications
+                  .filter(app => app.status === "PENDING")
+                  .slice(0, 5)
+                  .map(app => (
+                    <div key={app.id} className="dropdown-item">
+                      <strong>{app.job_title}</strong><br />
+                      👤 {app.username}<br />
+                      <small>
+                        {new Date(app.applied_at).toLocaleString()}
+                      </small>
                     </div>
-                    )}
-
-                    <button
-                      onClick={() => handleUpdateStatus(app.id, "SHORTLISTED")}
-                      style={{ marginRight: "8px" }}
-                    >
-                      Approve
-                    </button>
-
-                    <button
-                      onClick={() => handleUpdateStatus(app.id, "REJECTED")}
-                    >
-                      Reject
-                    </button>
-
-                    <hr />
-                  </div>
-                ))
+                  ))
               )}
             </div>
           )}
         </div>
-      ))}
+
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
+
+      </div>
     </div>
+
+    {/* ===== ANALYTICS + CHART ROW ===== */}
+    <div className="analytics-row">
+
+      {/* Cards */}
+      <div className="analytics-section">
+        <div className="recruiter-cards">
+
+          <div className="recruiter-card total">
+            <h3>Total Jobs</h3>
+            <h2>{analytics.total_jobs}</h2>
+          </div>
+
+          <div className="recruiter-card apps">
+            <h3>Total Applications</h3>
+            <h2>{analytics.total_applications}</h2>
+          </div>
+
+          <div className="recruiter-card short">
+            <h3>Shortlisted</h3>
+            <h2>{analytics.shortlisted}</h2>
+          </div>
+
+          <div className="recruiter-card reject">
+            <h3>Rejected</h3>
+            <h2>{analytics.rejected}</h2>
+          </div>
+
+          <div className="recruiter-card pending">
+            <h3>Pending</h3>
+            <h2>{analytics.pending}</h2>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Chart */}
+      <div className="chart-box">
+        <Pie
+          data={{
+            labels: ["Shortlisted", "Rejected", "Pending"],
+            datasets: [{
+              data: [
+                analytics.shortlisted,
+                analytics.rejected,
+                analytics.pending
+              ],
+              backgroundColor: ["#00b09b", "#ff416c", "#f7971e"],
+              borderWidth: 0
+            }]
+          }}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: { padding: 20, font: { size: 14 } }
+              }
+            }
+          }}
+        />
+      </div>
+
     </div>
+
+    {/* ===== FORM + JOBS ROW ===== */}
+    <div className="bottom-row">
+
+      {/* Form */}
+      <div className="form-section">
+        <h2>Post a Job</h2>
+
+        <input
+          placeholder="Job Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <input
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <input
+          placeholder="Company"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+
+        <button onClick={handlePostJob}>
+          {editId ? "Update Job" : "Post Job"}
+        </button>
+      </div>
+
+      {/* Jobs */}
+      <div className="jobs-section">
+        <h2>My Posted Jobs</h2>
+
+        {myJobs.map(job => (
+          <div key={job.id} className="job-card">
+
+            <div className="job-header">
+              <h3>
+                {job.title}
+                {job.new_applications > 0 && (
+                  <span className="new-badge">
+                    🔴 {job.new_applications} New
+                  </span>
+                )}
+              </h3>
+              <span className="company-name">{job.company}</span>
+            </div>
+
+            <p className="job-description">{job.description}</p>
+
+            <div className="job-buttons">
+              <button
+                className="delete-btn"
+                onClick={() => handleDelete(job.id)}
+              >
+                Delete
+              </button>
+
+              <button
+                className="edit-btn"
+                onClick={() => handleEdit(job)}
+              >
+                {editId === job.id ? "Cancel" : "Edit"}
+              </button>
+
+              <button
+                className="view-btn"
+                onClick={() => handleViewApplications(job.id)}
+              >
+                View Applications
+              </button>
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+  </div>
 );
 }
 

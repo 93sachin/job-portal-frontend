@@ -241,7 +241,7 @@ const handleUpdateStatus = async (applicationId, newStatus, applicantId) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status: newStatus, applicant: applicantId, job: selectedJobId }),
+        body: JSON.stringify({ status: newStatus}),
       }
     );
 
@@ -473,14 +473,14 @@ return (
                             <p><b>Status:</b> {app.status}</p>
 
                             <button
-                                    onClick={() => handleUpdateStatus(app.id, "SHORTLISTED", app.applicant)}
+                                    onClick={() => handleUpdateStatus(app.id, "SHORTLISTED")}
                                     style={{marginRight:"10px",background:"green",color:"white"}}
                                     >
                                     Shortlist
                                     </button>
 
                                     <button
-                                    onClick={() => handleUpdateStatus(app.id, "REJECTED", app.applicant)}
+                                    onClick={() => handleUpdateStatus(app.id, "REJECTED")}
                                     style={{background:"red",color:"white"}}
                                     >
                                     Reject

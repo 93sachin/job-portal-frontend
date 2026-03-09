@@ -133,8 +133,8 @@ const fetchAllApplications = async () => {
   // 🔥 Create or Update Job
   const handlePostJob = async () => {
     const url = editId
-      ? `https://job-portal-backend-p580.onrender.com/api/jobs/update/${editId}/`
-      : "https://job-portal-backend-p580.onrender.com/api/jobs/create/";
+      ? `https://job-portal-backend-p580.onrender.com/api/update/${editId}/`
+      : "https://job-portal-backend-p580.onrender.com/api/create/";
 
     const method = editId ? "PUT" : "POST";
 

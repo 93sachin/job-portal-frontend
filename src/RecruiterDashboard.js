@@ -473,14 +473,14 @@ return (
                             <p><b>Status:</b> {app.status}</p>
 
                             <button
-                                    onClick={() => handleUpdateStatus(app.id, "SHORTLISTED", app.student)}
+                                    onClick={() => handleUpdateStatus(app.id, "SHORTLISTED", app.applicant)}
                                     style={{marginRight:"10px",background:"green",color:"white"}}
                                     >
                                     Shortlist
                                     </button>
 
                                     <button
-                                    onClick={() => handleUpdateStatus(app.id, "REJECTED", app.student)}
+                                    onClick={() => handleUpdateStatus(app.id, "REJECTED", app.applicant)}
                                     style={{background:"red",color:"white"}}
                                     >
                                     Reject

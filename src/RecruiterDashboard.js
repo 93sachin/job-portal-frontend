@@ -230,6 +230,7 @@ const handleViewApplications = async (jobId) => {
 };
 
   // 🔥 Update Application Status
+console.log(applicationId, status, applicantId);
 const handleUpdateStatus = async (applicationId, status, applicantId) => {
   try {
     await fetch(

@@ -229,9 +229,9 @@ const handleViewApplications = async (jobId) => {
   }
 };
 
+
   // 🔥 Update Application Status
-console.log(applicationId, status, applicantId);
-const handleUpdateStatus = async (applicationId, status, applicantId) => {
+const handleUpdateStatus = async (applicationId, newStatus, applicantId) => {
   try {
     await fetch(
       `https://job-portal-backend-p580.onrender.com/api/update-application/${applicationId}/`,
@@ -241,7 +241,7 @@ const handleUpdateStatus = async (applicationId, status, applicantId) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status: status, applicant: applicantId, job: selectedJobId }),
+        body: JSON.stringify({ status: newStatus, applicant: applicantId, job: selectedJobId }),
       }
     );
 

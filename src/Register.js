@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function Register() {
 
 const [username,setUsername]=useState("")
+const [email,setEmail]=useState("")
 const [password,setPassword]=useState("")
 const [role,setRole]=useState("student")
 
@@ -17,6 +18,7 @@ headers:{
 },
 body:JSON.stringify({
 username,
+email,
 password,
 role
 })
@@ -39,6 +41,13 @@ return (
 <input
 placeholder="Username"
 onChange={(e)=>setUsername(e.target.value)}
+/>
+
+<br/><br/>
+
+<input
+placeholder="Email"
+onChange={(e)=>setEmail(e.target.value)}
 />
 
 <br/><br/>

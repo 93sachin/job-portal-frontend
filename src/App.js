@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import MyApplications from "./MyApplications";
 import RecruiterDashboard from "./RecruiterDashboard";
 import Login from "./Login";
+import Register from "./Register";
 
 // ================= PROTECTED ROUTE =================
 function ProtectedRoute({ children, allowedRole }) {
@@ -26,6 +27,9 @@ function App() {
 
       {/* Login Route */}
       <Route path="/" element={<Login />} />
+
+      {/* Register Route */}
+      <Route path="/register" element={<Register/>} />
 
       {/* Dashboard Route */}
       <Route

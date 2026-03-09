@@ -61,6 +61,16 @@ return (
 
     <button onClick={handleLogin}>Login</button>
 
+    <p style={{marginTop:"15px"}}>
+      Don't have an account?{" "}
+      <span 
+        style={{color:"blue",cursor:"pointer"}}
+        onClick={() => navigate("/register")}
+      >
+        Register
+      </span>
+    </p>
+
     <p>Welcome Back 👋</p>
   </div>
 </div>

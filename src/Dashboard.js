@@ -18,7 +18,7 @@ function Dashboard() {
 
   // Fetch jobs
   useEffect(() => {
-    fetch("https://job-portal-backend-p580.onrender.com/api/jobs/", {
+    fetch("https://job-portal-backend-p580.onrender.com/api/jobs/list/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

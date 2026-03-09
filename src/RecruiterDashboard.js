@@ -67,7 +67,7 @@ const handleLogout = () => {
     const token = localStorage.getItem("access");
 
     const response = await fetch(
-      "https://job-portal-backend-p580.onrender.com/api/jobs/new-applications-count/",
+      "https://job-portal-backend-p580.onrender.com/api/new-applications-count/",
       {
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -110,7 +110,7 @@ const fetchAllApplications = async () => {
   }, []);
 
   useEffect(() => {
-  fetch("https://job-portal-backend-p580.onrender.com/api/jobs/analytics", {
+  fetch("https://job-portal-backend-p580.onrender.com/api/analytics", {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("access")}`,
     },

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import "./Register.css";
 
-function Register() {
+function Register(){
 
 const [username,setUsername]=useState("")
 const [email,setEmail]=useState("")
@@ -9,9 +10,7 @@ const [role,setRole]=useState("student")
 
 const handleRegister = async () => {
 
-const response = await fetch(
-"https://job-portal-backend-p580.onrender.com/api/register/",
-{
+await fetch("https://job-portal-backend-p580.onrender.com/api/register/",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -24,33 +23,27 @@ role
 })
 })
 
-if(response.ok){
 alert("Registered Successfully ✅")
-}else{
-alert("Registration Failed ❌")
-}
 
 }
 
-return (
+return(
 
-<div style={{textAlign:"center",marginTop:"100px"}}>
+<div className="register-page">
 
-<h2>Register</h2>
+<div className="register-card">
+
+<h2>🚀 Create Account</h2>
 
 <input
 placeholder="Username"
 onChange={(e)=>setUsername(e.target.value)}
 />
 
-<br/><br/>
-
 <input
 placeholder="Email"
 onChange={(e)=>setEmail(e.target.value)}
 />
-
-<br/><br/>
 
 <input
 type="password"
@@ -58,18 +51,18 @@ placeholder="Password"
 onChange={(e)=>setPassword(e.target.value)}
 />
 
-<br/><br/>
-
 <select onChange={(e)=>setRole(e.target.value)}>
-
 <option value="student">Student</option>
 <option value="recruiter">Recruiter</option>
-
 </select>
 
-<br/><br/>
-
 <button onClick={handleRegister}>Register</button>
+
+<p className="login-link">
+Already have an account? <a href="/">Login</a>
+</p>
+
+</div>
 
 </div>
 
@@ -77,4 +70,4 @@ onChange={(e)=>setPassword(e.target.value)}
 
 }
 
-export default Register;
+export default Register

@@ -110,9 +110,9 @@ const fetchAllApplications = async () => {
   }, []);
 
   useEffect(() => {
-  fetch("https://job-portal-backend-p580.onrender.com/api/analytics", {
+  fetch("https://job-portal-backend-p580.onrender.com/api/analytics/", {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("access")}`,
+      Authorization: `Bearer ${token}`,
     },
   })
     .then(async (res) => {
@@ -234,7 +234,7 @@ const handleViewApplications = async (jobId) => {
 const handleUpdateStatus = async (applicationId, newStatus, applicantId) => {
   try {
     await fetch(
-      `https://job-portal-backend-p580.onrender.com/api/update-application/${applicationId}/`,
+      `https://job-portal-backend-p580.onrender.com/api/application/update/${applicationId}/`,
       {
         method: "PUT",
         headers: {

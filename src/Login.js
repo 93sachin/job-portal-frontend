@@ -9,7 +9,8 @@ function Login() {
   const navigate = useNavigate();
 
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch("https://job-portal-backend-p580.onrender.com/api/token/", {
         method: "POST",
@@ -59,7 +60,9 @@ return (
       onChange={(e) => setPassword(e.target.value)}
     />
 
-    <button onClick={handleLogin}>Login</button>
+    <button type="button" onClick={handleLogin}>
+      Login
+    </button>
 
     <p style={{marginTop:"15px"}}>
       Don't have an account?{" "}

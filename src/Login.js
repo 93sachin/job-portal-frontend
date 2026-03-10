@@ -17,11 +17,15 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ 
+          username, 
+          password 
+        }),
       });
 
       const data = await response.json();
       console.log("LOGIN RESPONSE:", data);
+      console.log("TOKEN:", data.access);
 
       if (response.ok) {
         localStorage.setItem("access", data.access);

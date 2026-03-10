@@ -167,7 +167,7 @@ const fetchAllApplications = async () => {
   const handleDelete = async (id) => {
   try {
     const response = await fetch(
-      `https://job-portal-backend-p580.onrender.com/api/jobs/delete/${id}/`,
+      `https://job-portal-backend-p580.onrender.com/api/delete/${id}/`,
       {
         method: "DELETE",
         headers: {

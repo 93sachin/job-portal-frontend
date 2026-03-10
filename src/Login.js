@@ -9,8 +9,7 @@ function Login() {
   const navigate = useNavigate();
 
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     try {
       const response = await fetch("https://job-portal-backend-p580.onrender.com/api/token/", {
         method: "POST",
